@@ -110,10 +110,14 @@ main().then(()=> {
 
 //routes
 
+
 app.use("/listings" , listingRouter);
 app.use("/listings/:id/reviews" , reviewRouter);
 app.use("/" , userRouter);
 
+app.get('/', (req, res) => { //default route
+  res.redirect('/listings');
+});
 
 
 
