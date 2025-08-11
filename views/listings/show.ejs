@@ -1,0 +1,157 @@
+
+<%-layout("/layouts/boilerplate") %> 
+<link rel="stylesheet" href="/css/rating.css">
+<link href="https://cdn.maptiler.com/maptiler-sdk-js/v3.6.1/maptiler-sdk.css" rel="stylesheet"/>
+
+
+
+<body>
+
+   <div class="row mt-3">
+    <div class="col-8 offset-3 mb-2">
+
+     <h3> <%= data.title %> </h3>
+   
+    </div>
+
+    <div class="card col-6 offset-3 show-card listing-card">
+       
+    <img src="<%= data.image.url %>"  class="card-img-top show-img"  alt="listing_image">
+
+    <div class="card-body"> 
+      <br>
+      <p class="card-text"><i> Owner: <%= data.owner.username %> </i> </p>
+      <p class="card-text">  <%= data.description %>   </p>
+      <p class="card-text">&#8377  <%= data.price.toLocaleString("en-IN") %> /night  </p>
+      <p class="card-text">  <%= data.location %>   </p>
+      <p class="card-text">  <%= data.country %>   </p>
+      
+
+
+       
+  
+    </div>
+
+    </div>
+
+ 
+
+    <% if( currUser && currUser._id.equals(data.owner._id)) { %> 
+ 
+ 
+   <div class="btns mb-3">
+    <a href="/listings/<%= data._id %>/edit" class="btn btn-dark col-1 offset-3 ed-btn">Edit</a>
+
+   <br><br>
+
+   <form action="/listings/<%= data._id %>?_method=DELETE" method="POST"  >
+
+    <button  class="btn btn-dark  offset-5">Delete</button>
+
+   </form>
+   
+   </div>
+
+   <% } %> 
+
+   <div class="col-8 offset-3 mb-3" >
+
+  
+
+    <% if( currUser ) { %> 
+    <hr>
+
+     <h4>Leave a Review: </h4>
+  
+     <form method="POST" action="/listings/<%=data._id %>/reviews " novalidate class="needs-validation">
+
+      <br>
+<div> 
+ 
+ <label for="" class="form-label">Rating</label>
+<fieldset class="starability-slot">
+  <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+  <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+  <label for="first-rate1" title="Terrible">1 star</label>
+  <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+  <label for="first-rate2" title="Not good">2 stars</label>
+  <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+  <label for="first-rate3" title="Average">3 stars</label>
+  <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+  <label for="first-rate4" title="Very good">4 stars</label>
+  <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+  <label for="first-rate5" title="Amazing">5 stars</label>
+</fieldset>
+</div>
+
+       <div class="mb-3 mt-3">
+        <label for="comments" class="form-label">Comments</label>
+       <textarea id="comments" cols="30" rows="5" name="review[comment]" class="form-control" required></textarea>
+      </div> 
+      <div class="invalid-feedback">Please enter some comment for review</div>
+      <button class="btn btn-outline-dark">submit</button>
+     </form>
+
+      <% } %> 
+
+
+   <% if( data.reviews.length > 0 ) {  %> 
+
+   
+
+     <hr>
+
+     <p> <h3>All reviews</h3></p>
+
+     <div class="row">
+
+    
+
+    <% for( let review of data.reviews) { %>
+
+     <div class="card col-5 ms-3 mb-3 ">
+
+         <div class="card-body">
+
+          <div class="card-title">@<%= review.author.username%>  </i> </div>
+          <p class="card-text"><%= review.comment %></p>
+          <p class="starability-result" data-rating="<%= review.rating %>"></p>
+
+         </div>
+
+         <form class="mb-3 mt-3" method="POST"  action="/listings/<%= data._id %>/reviews/<%= review._id %>?_method=DELETE">
+           <button class="btn btn-sm btn-dark">Delete</button>
+
+         </form>
+
+     </div>
+
+<% } %>
+<% } %>
+
+
+ </div>
+
+   </div>
+
+   <div  class="col-6 offset-3 mb-5 mt-3">
+
+ <h3>You will be here!</h3>
+ <br>
+   <div id="map"></div>
+
+   </div>
+      
+  
+  </div>
+
+
+  <script>
+    let apiKey = "<%= apiKey %>";
+    let data = <%- JSON.stringify(data) %>;
+
+  </script>
+<script src="https://cdn.maptiler.com/maptiler-sdk-js/v3.6.1/maptiler-sdk.umd.min.js"></script>
+<script src="/js/map.js"></script>
+</body>
+

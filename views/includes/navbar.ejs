@@ -1,0 +1,80 @@
+<style>
+.btn-search {
+  background-color: #fe424d;
+  color: #fff;
+  border-radius: 25px;
+  padding: 0 1rem 0 1rem;
+   font-size:0.875rem;
+  
+}
+
+.btn-search:hover {
+  background-color: #fe424d;
+  color: #fff;
+}
+.btn-search i {
+  display: inline !important;
+  margin-right: 0.5rem;
+ 
+}
+
+.search-inp {
+border-radius: 25px;
+padding:0.5rem 3rem 0.5rem 3rem;
+font-size: 0.875rem;
+
+}
+</style>
+
+<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/listings">  <i class="fa-brands fa-airbnb fa-2x" style="color: #4217c4; text-shadow: 1px 1px 1px rgba(0,0,0,0.2);"></i> </a>
+    <button class="navbar-toggler" type="button" 
+     data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <!-- navbar links -->
+      <div class="navbar-nav">
+       
+        <a class="nav-link" href="/listings " >Explore</a>
+       
+      
+      </div>
+
+      <!-- search bar -->
+      <div  class="navbar-nav ms-auto">
+        <form action="" class="d-flex">
+
+          <input type="search" class="form-control me-2 search-inp" placeholder="Search destinations" >
+          <button class="btn btn-search" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
+        </form>
+
+      </div>
+
+       <!-- navbar signup links -->
+      <div class="navbar-nav ms-auto"> 
+        
+         <a class="nav-link" href="/listings/new">Airbnb&nbsp;your&nbsp;home</a>
+
+       <% if( !currUser) { %>
+
+        <a class="nav-link bold-link"  href="/signup">signup</a>
+       <a class="nav-link bold-link"  href="/login">login</a>
+
+
+        <%  }  %>
+        
+         <% if( currUser) {  %>
+         <a class="nav-link bold-link" href="/logout">logout</a>
+           
+         <% } %>
+       
+      
+      </div>
+
+    </div>
+  </div>
+  
+</nav>  
